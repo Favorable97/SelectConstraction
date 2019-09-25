@@ -32,9 +32,9 @@
             this.AddSelectToDB = new System.Windows.Forms.Button();
             this.Request = new System.Windows.Forms.RichTextBox();
             this.AddRequest = new System.Windows.Forms.Button();
-            this.DoRequst = new System.Windows.Forms.Button();
+            this.ChooseRequest = new System.Windows.Forms.Button();
             this.PanelWithArg = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.DoRequest = new System.Windows.Forms.Button();
             this.PanelWithElementForAddRequest.SuspendLayout();
             this.PanelWithArg.SuspendLayout();
             this.SuspendLayout();
@@ -131,43 +131,46 @@
             this.AddRequest.UseVisualStyleBackColor = true;
             this.AddRequest.Click += new System.EventHandler(this.AddRequest_Click);
             // 
-            // DoRequst
+            // ChooseRequest
             // 
-            this.DoRequst.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DoRequst.Location = new System.Drawing.Point(8, 194);
-            this.DoRequst.Name = "DoRequst";
-            this.DoRequst.Size = new System.Drawing.Size(146, 54);
-            this.DoRequst.TabIndex = 4;
-            this.DoRequst.Text = "Выполнить запрос";
-            this.DoRequst.UseVisualStyleBackColor = true;
+            this.ChooseRequest.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ChooseRequest.Location = new System.Drawing.Point(8, 194);
+            this.ChooseRequest.Name = "ChooseRequest";
+            this.ChooseRequest.Size = new System.Drawing.Size(146, 54);
+            this.ChooseRequest.TabIndex = 4;
+            this.ChooseRequest.Text = "Выбрать запрос";
+            this.ChooseRequest.UseVisualStyleBackColor = true;
+            this.ChooseRequest.Click += new System.EventHandler(this.ChooseRequst_Click);
             // 
             // PanelWithArg
             // 
-            this.PanelWithArg.Controls.Add(this.button1);
+            this.PanelWithArg.AutoSize = true;
+            this.PanelWithArg.Controls.Add(this.DoRequest);
             this.PanelWithArg.Location = new System.Drawing.Point(8, 255);
             this.PanelWithArg.Name = "PanelWithArg";
-            this.PanelWithArg.Size = new System.Drawing.Size(395, 219);
+            this.PanelWithArg.Size = new System.Drawing.Size(395, 99);
             this.PanelWithArg.TabIndex = 5;
             this.PanelWithArg.Visible = false;
             // 
-            // button1
+            // DoRequest
             // 
-            this.button1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(3, 160);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 47);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Выполнить";
-            this.button1.UseVisualStyleBackColor = true;
+            this.DoRequest.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.DoRequest.Location = new System.Drawing.Point(4, 39);
+            this.DoRequest.Name = "DoRequest";
+            this.DoRequest.Size = new System.Drawing.Size(120, 47);
+            this.DoRequest.TabIndex = 6;
+            this.DoRequest.Text = "Выполнить";
+            this.DoRequest.UseVisualStyleBackColor = true;
+            this.DoRequest.Click += new System.EventHandler(this.DoRequest_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(756, 472);
+            this.ClientSize = new System.Drawing.Size(767, 481);
             this.Controls.Add(this.PanelWithArg);
-            this.Controls.Add(this.DoRequst);
+            this.Controls.Add(this.ChooseRequest);
             this.Controls.Add(this.AddRequest);
             this.Controls.Add(this.PanelWithElementForAddRequest);
             this.Controls.Add(this.label1);
@@ -191,12 +194,12 @@
         private System.Windows.Forms.Button AddSelectToDB;
         private System.Windows.Forms.RichTextBox Request;
         private System.Windows.Forms.Button AddRequest;
-        private System.Windows.Forms.Button DoRequst;
+        private System.Windows.Forms.Button ChooseRequest;
         private System.Windows.Forms.TextBox NameRequest;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel PanelWithArg;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button DoRequest;
     }
 }
 
