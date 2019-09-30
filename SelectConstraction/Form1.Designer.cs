@@ -23,6 +23,7 @@
         /// содержимое этого метода с помощью редактора кода.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.ListWithRequests = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.PanelWithElementForAddRequest = new System.Windows.Forms.Panel();
@@ -35,6 +36,8 @@
             this.ChooseRequest = new System.Windows.Forms.Button();
             this.PanelWithArg = new System.Windows.Forms.Panel();
             this.DoRequest = new System.Windows.Forms.Button();
+            this.EditButton = new System.Windows.Forms.Button();
+            this.RemoveButton = new System.Windows.Forms.Button();
             this.PanelWithElementForAddRequest.SuspendLayout();
             this.PanelWithArg.SuspendLayout();
             this.SuspendLayout();
@@ -48,6 +51,8 @@
             this.ListWithRequests.Name = "ListWithRequests";
             this.ListWithRequests.Size = new System.Drawing.Size(255, 144);
             this.ListWithRequests.TabIndex = 0;
+            this.ListWithRequests.SelectedIndexChanged += new System.EventHandler(this.ListWithRequests_SelectedIndexChanged);
+            this.ListWithRequests.DoubleClick += new System.EventHandler(this.ListWithRequests_DoubleClick);
             // 
             // label1
             // 
@@ -123,9 +128,9 @@
             // AddRequest
             // 
             this.AddRequest.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.AddRequest.Location = new System.Drawing.Point(203, 194);
+            this.AddRequest.Location = new System.Drawing.Point(122, 194);
             this.AddRequest.Name = "AddRequest";
-            this.AddRequest.Size = new System.Drawing.Size(146, 51);
+            this.AddRequest.Size = new System.Drawing.Size(110, 54);
             this.AddRequest.TabIndex = 3;
             this.AddRequest.Text = "Добавить запрос";
             this.AddRequest.UseVisualStyleBackColor = true;
@@ -136,7 +141,7 @@
             this.ChooseRequest.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ChooseRequest.Location = new System.Drawing.Point(8, 194);
             this.ChooseRequest.Name = "ChooseRequest";
-            this.ChooseRequest.Size = new System.Drawing.Size(146, 54);
+            this.ChooseRequest.Size = new System.Drawing.Size(97, 54);
             this.ChooseRequest.TabIndex = 4;
             this.ChooseRequest.Text = "Выбрать запрос";
             this.ChooseRequest.UseVisualStyleBackColor = true;
@@ -155,13 +160,37 @@
             // DoRequest
             // 
             this.DoRequest.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DoRequest.Location = new System.Drawing.Point(4, 39);
+            this.DoRequest.Location = new System.Drawing.Point(4, 41);
             this.DoRequest.Name = "DoRequest";
             this.DoRequest.Size = new System.Drawing.Size(120, 47);
             this.DoRequest.TabIndex = 6;
             this.DoRequest.Text = "Выполнить";
             this.DoRequest.UseVisualStyleBackColor = true;
             this.DoRequest.Click += new System.EventHandler(this.DoRequest_Click);
+            // 
+            // EditButton
+            // 
+            this.EditButton.Enabled = false;
+            this.EditButton.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.EditButton.Location = new System.Drawing.Point(269, 95);
+            this.EditButton.Name = "EditButton";
+            this.EditButton.Size = new System.Drawing.Size(110, 54);
+            this.EditButton.TabIndex = 3;
+            this.EditButton.Text = "Изменить";
+            this.EditButton.UseVisualStyleBackColor = true;
+            this.EditButton.Click += new System.EventHandler(this.EditButton_Click);
+            // 
+            // RemoveButton
+            // 
+            this.RemoveButton.Enabled = false;
+            this.RemoveButton.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.RemoveButton.Location = new System.Drawing.Point(252, 196);
+            this.RemoveButton.Name = "RemoveButton";
+            this.RemoveButton.Size = new System.Drawing.Size(82, 52);
+            this.RemoveButton.TabIndex = 3;
+            this.RemoveButton.Text = "Удалить";
+            this.RemoveButton.UseVisualStyleBackColor = true;
+            this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
             // 
             // Form1
             // 
@@ -171,10 +200,13 @@
             this.ClientSize = new System.Drawing.Size(767, 481);
             this.Controls.Add(this.PanelWithArg);
             this.Controls.Add(this.ChooseRequest);
+            this.Controls.Add(this.RemoveButton);
+            this.Controls.Add(this.EditButton);
             this.Controls.Add(this.AddRequest);
             this.Controls.Add(this.PanelWithElementForAddRequest);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ListWithRequests);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -200,6 +232,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel PanelWithArg;
         private System.Windows.Forms.Button DoRequest;
+        private System.Windows.Forms.Button EditButton;
+        private System.Windows.Forms.Button RemoveButton;
     }
 }
 

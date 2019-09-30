@@ -32,5 +32,15 @@ namespace SelectConstraction.Properties {
                 return ((string)(this["identConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SRZ\\SRZ;Initial Catalog=srz3_00;User ID=expert;Password=123")]
+        public string srz3_00ConnectionString {
+            get {
+                return ((string)(this["srz3_00ConnectionString"]));
+            }
+        }
     }
 }
