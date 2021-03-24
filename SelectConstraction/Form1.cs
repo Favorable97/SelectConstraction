@@ -15,20 +15,26 @@ namespace SelectConstraction {
     public partial class Form1 : Form {
         private bool flag = false;
         readonly string connectionString = @"Data Source=SRZ\SRZ;Initial Catalog=ident;User ID=user;Password=гыук";
-        readonly string connectionString2 = @"Server=192.168.2.155;Port=5432;User Id=fuser;Password=6PJyRMLH#Sf@tQLL9Sc@;Database=foms;";
+        readonly string connectionString2 = @"Server=192.168.2.155;Port=5432;User Id=fuser;Password=6PJyRMLH#Sf@tQLL9Sc@;Database=foms; Pooling=false;Timeout=600;CommandTimeout=600";
+        readonly string connectionString3 = @"Data Source=SRZ\SRZ;Initial Catalog=srz3_00;User ID=expert;Password=123";
+        readonly string password = "123";
         string request;
         public Form1() {
             InitializeComponent();
-            this.Size = new Size(400, 300);
+            this.Size = new Size(520, 300);
+            
         }
 
         private void AddRequest_Click(object sender, EventArgs e) {
-            this.AutoSize = true;
-            PanelWithElementForAddRequest.Visible = true;
+            if (CorrectPassword()) {
+                this.AutoSize = true;
+                PanelWithElementForAddRequest.Visible = true;
+            } else {
+                MessageBox.Show("Неверный пароль!");
+            }
         }
         private void Form1_Load(object sender, EventArgs e) {
             this.AutoSize = false;
-
             UpdateList();
         }
 
@@ -39,6 +45,14 @@ namespace SelectConstraction {
                     using (SqlDataReader reader = com.ExecuteReader()) {
                         while (reader.Read()) {
                             ListWithRequests.Items.Add(reader.GetString(0));
+                        }
+                    }
+                }
+                Departments.Items.Add("Не выбрано");
+                using (SqlCommand com = new SqlCommand("Select Distinct Departments From Requests", con)) {
+                    using (SqlDataReader reader = com.ExecuteReader()) {
+                        while (reader.Read()) {
+                            Departments.Items.Add(reader.GetString(0));
                         }
                     }
                 }
@@ -74,7 +88,7 @@ namespace SelectConstraction {
             this.AutoSize = false;
             this.Size = new Size(400, 300);
             flag = false;
-            AddSelectToDB.Name = "Добавить";
+            AddSelectToDB.Text = "Добавить";
             PanelWithElementForAddRequest.Visible = false;
         }
 
@@ -85,6 +99,7 @@ namespace SelectConstraction {
             DeleteEl();
             ParsingRequest();
             PanelWithArg.Size = new Size(395, 99);
+            PanelWithElementForAddRequest.Visible = false;
         }
         private void DeleteEl() {
             //PanelWithArg.Size = new Size(395, 99);
@@ -105,29 +120,45 @@ namespace SelectConstraction {
         void RunRequest() {
             request = request.Substring(request.IndexOf("Select", comparisonType: StringComparison.OrdinalIgnoreCase), request.Length - request.IndexOf("Select", comparisonType: StringComparison.OrdinalIgnoreCase));
             request = request.Replace('\n', ' ');
-            using (NpgsqlConnection npgsqlcon = new NpgsqlConnection(connectionString2)) {
-                npgsqlcon.Open();
-                int index = 0;
-                foreach (var nameVar in nameVarLst) {
-                    if (nameVar.Value.IndexOf("varchar") != -1) {
-                        string str = "'" + textBoxes[index].Text.ToString() + "'";
-                        request = request.Replace(nameVar.Key.ToString(), "'" + textBoxes[index].Text.ToString() + "'");
+
+            int index = 0;
+            foreach (var nameVar in nameVarLst) {
+                if (nameVar.Value.IndexOf("varchar") != -1) {
+                    string str = "'" + textBoxes[index].Text.ToString() + "'";
+                    request = request.Replace(nameVar.Key.ToString(), "'" + textBoxes[index].Text.ToString() + "'");
+                } else if (nameVar.Value.IndexOf("date") != -1)
+                    request = request.Replace(nameVar.Key.ToString(), "'" + DateTime.ParseExact(GetDate(textBoxes[index].Text), "yyyyMdd", null) + "'");
+                else if (nameVar.Value.IndexOf("int") != -1)
+                    request = request.Replace(nameVar.Key.ToString(), textBoxes[index].Text.ToString());
+                index++;
+            }
+
+            try {
+                using (NpgsqlConnection npgsqlcon = new NpgsqlConnection(connectionString2)) {
+                    npgsqlcon.Open();
+
+                    using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(request, npgsqlcon)) {
+                        DataSet dataSet = new DataSet();
+                        adapter.Fill(dataSet);
+                        ReportForm reportForm = new ReportForm();
+                        reportForm.ReportTbl.DataSource = dataSet.Tables[0];
+                        reportForm.ShowDialog();
                     }
-                        
-                    else if (nameVar.Value.IndexOf("date") != -1)
-                        request = request.Replace(nameVar.Key.ToString(), "'" + DateTime.ParseExact(GetDate(textBoxes[index].Text), "yyyyMdd", null) + "'");
-                    else if (nameVar.Value.IndexOf("int") != -1)
-                        request = request.Replace(nameVar.Key.ToString(), textBoxes[index].Text.ToString());
-                    index++;
                 }
-                using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(request, npgsqlcon)) {
-                    DataSet dataSet = new DataSet();
-                    adapter.Fill(dataSet);
-                    ReportForm reportForm = new ReportForm();
-                    reportForm.ReportTbl.DataSource = dataSet.Tables[0];
-                    reportForm.ShowDialog();
+            } catch (Npgsql.NpgsqlException) {
+                using (SqlConnection con = new SqlConnection(connectionString3)) {
+                    con.Open();
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(request, con)) {
+                        DataSet dataSet = new DataSet();
+                        adapter.Fill(dataSet);
+                        ReportForm reportForm = new ReportForm();
+                        reportForm.ReportTbl.DataSource = dataSet.Tables[0];
+                        reportForm.ShowDialog();
+                    }
                 }
             }
+            
         }
         Dictionary<string, string> nameVarLst;
         Label[] OurLabel;
@@ -158,7 +189,7 @@ namespace SelectConstraction {
                 }
             }
             DoRequest.Location = new Point(DoRequest.Location.X, i);
-            this.Size = new Size(this.Size.Width, PanelWithArg.Height);
+            //this.Size = new Size(400, PanelWithArg.Height);
         }
 
         private string GetRequest() {
@@ -193,6 +224,7 @@ namespace SelectConstraction {
             DeleteEl();
             ParsingRequest();
             PanelWithArg.Size = new Size(400, 99);
+            PanelWithElementForAddRequest.Visible = false;
         }
 
         private void ListWithRequests_SelectedIndexChanged(object sender, EventArgs e) {
@@ -201,11 +233,15 @@ namespace SelectConstraction {
         }
 
         private void EditButton_Click(object sender, EventArgs e) {
-            AddSelectToDB.Text = "Изменить";
-            NameRequest.Text = ListWithRequests.SelectedItem.ToString();
-            GetReq();
-            flag = true;this.AutoSize = true;
-            PanelWithElementForAddRequest.Visible = true;
+            if (CorrectPassword()) {
+                AddSelectToDB.Text = "Изменить";
+                NameRequest.Text = ListWithRequests.SelectedItem.ToString();
+                GetReq();
+                flag = true; this.AutoSize = true;
+                PanelWithElementForAddRequest.Visible = true;
+            } else {
+                MessageBox.Show("Неверный пароль!");
+            }
         }
 
         void GetReq() {
@@ -222,14 +258,55 @@ namespace SelectConstraction {
         }
 
         private void RemoveButton_Click(object sender, EventArgs e) {
+            if (CorrectPassword()) {
+                using (SqlConnection con = new SqlConnection(connectionString)) {
+                    using (SqlCommand com = new SqlCommand("Delete From Requests Where NameRequest = @name", con)) {
+                        con.Open();
+                        com.Parameters.AddWithValue("@name", ListWithRequests.SelectedItem.ToString());
+                        com.ExecuteNonQuery();
+                    }
+                }
+                ListWithRequests.Items.Remove(ListWithRequests.SelectedItem);
+            } else {
+                MessageBox.Show("Неверный пароль!");
+            }
+        }
+
+        public bool CorrectPassword() {
+            Modal modal = new Modal(password);
+            modal.ShowDialog();
+
+            if (modal.CorrectPassword()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        private void Departments_SelectedIndexChanged(object sender, EventArgs e) {
+            ListWithRequests.Items.Clear();
             using (SqlConnection con = new SqlConnection(connectionString)) {
-                using (SqlCommand com = new SqlCommand("Delete From Requests Where NameRequest = @name", con)) {
-                    con.Open();
-                    com.Parameters.AddWithValue("@name", ListWithRequests.SelectedItem.ToString());
-                    com.ExecuteNonQuery();
+                con.Open();
+                if (Departments.SelectedIndex == 0) {
+                    using (SqlCommand com = new SqlCommand("Select NameRequest From Requests", con)) {
+                        using (SqlDataReader reader = com.ExecuteReader()) {
+                            while (reader.Read()) {
+                                ListWithRequests.Items.Add(reader.GetString(0));
+                            }
+                        }
+                    }
+                } else {
+                    using (SqlCommand com = new SqlCommand("Select NameRequest From Requests Where Departments = @dep", con)) {
+                        com.Parameters.AddWithValue("@dep", Departments.SelectedItem.ToString());
+                        using (SqlDataReader reader = com.ExecuteReader()) {
+                            while (reader.Read()) {
+                                ListWithRequests.Items.Add(reader.GetString(0));
+                            }
+                        }
+                    }
                 }
             }
-            ListWithRequests.Items.Remove(ListWithRequests.SelectedItem);
+            
         }
     }
 }

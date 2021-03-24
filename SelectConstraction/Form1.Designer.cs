@@ -38,6 +38,8 @@
             this.DoRequest = new System.Windows.Forms.Button();
             this.EditButton = new System.Windows.Forms.Button();
             this.RemoveButton = new System.Windows.Forms.Button();
+            this.Departments = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.PanelWithElementForAddRequest.SuspendLayout();
             this.PanelWithArg.SuspendLayout();
             this.SuspendLayout();
@@ -71,7 +73,7 @@
             this.PanelWithElementForAddRequest.Controls.Add(this.label2);
             this.PanelWithElementForAddRequest.Controls.Add(this.AddSelectToDB);
             this.PanelWithElementForAddRequest.Controls.Add(this.Request);
-            this.PanelWithElementForAddRequest.Location = new System.Drawing.Point(406, 0);
+            this.PanelWithElementForAddRequest.Location = new System.Drawing.Point(515, 1);
             this.PanelWithElementForAddRequest.Name = "PanelWithElementForAddRequest";
             this.PanelWithElementForAddRequest.Size = new System.Drawing.Size(355, 474);
             this.PanelWithElementForAddRequest.TabIndex = 2;
@@ -172,9 +174,9 @@
             // 
             this.EditButton.Enabled = false;
             this.EditButton.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.EditButton.Location = new System.Drawing.Point(269, 95);
+            this.EditButton.Location = new System.Drawing.Point(366, 196);
             this.EditButton.Name = "EditButton";
-            this.EditButton.Size = new System.Drawing.Size(110, 54);
+            this.EditButton.Size = new System.Drawing.Size(110, 52);
             this.EditButton.TabIndex = 3;
             this.EditButton.Text = "Изменить";
             this.EditButton.UseVisualStyleBackColor = true;
@@ -192,12 +194,34 @@
             this.RemoveButton.UseVisualStyleBackColor = true;
             this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
             // 
+            // Departments
+            // 
+            this.Departments.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Departments.FormattingEnabled = true;
+            this.Departments.Location = new System.Drawing.Point(379, 20);
+            this.Departments.Name = "Departments";
+            this.Departments.Size = new System.Drawing.Size(121, 21);
+            this.Departments.TabIndex = 6;
+            this.Departments.SelectedIndexChanged += new System.EventHandler(this.Departments_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Century", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(296, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(67, 23);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Отдел";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(767, 481);
+            this.ClientSize = new System.Drawing.Size(873, 526);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.Departments);
             this.Controls.Add(this.PanelWithArg);
             this.Controls.Add(this.ChooseRequest);
             this.Controls.Add(this.RemoveButton);
@@ -234,6 +258,8 @@
         private System.Windows.Forms.Button DoRequest;
         private System.Windows.Forms.Button EditButton;
         private System.Windows.Forms.Button RemoveButton;
+        private System.Windows.Forms.ComboBox Departments;
+        private System.Windows.Forms.Label label4;
     }
 }
 
