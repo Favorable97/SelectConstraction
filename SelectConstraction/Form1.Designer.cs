@@ -40,6 +40,8 @@
             this.RemoveButton = new System.Windows.Forms.Button();
             this.Departments = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.DepList = new System.Windows.Forms.ComboBox();
             this.PanelWithElementForAddRequest.SuspendLayout();
             this.PanelWithArg.SuspendLayout();
             this.SuspendLayout();
@@ -51,7 +53,7 @@
             this.ListWithRequests.ItemHeight = 20;
             this.ListWithRequests.Location = new System.Drawing.Point(8, 46);
             this.ListWithRequests.Name = "ListWithRequests";
-            this.ListWithRequests.Size = new System.Drawing.Size(255, 144);
+            this.ListWithRequests.Size = new System.Drawing.Size(326, 144);
             this.ListWithRequests.TabIndex = 0;
             this.ListWithRequests.SelectedIndexChanged += new System.EventHandler(this.ListWithRequests_SelectedIndexChanged);
             this.ListWithRequests.DoubleClick += new System.EventHandler(this.ListWithRequests_DoubleClick);
@@ -68,6 +70,8 @@
             // 
             // PanelWithElementForAddRequest
             // 
+            this.PanelWithElementForAddRequest.Controls.Add(this.DepList);
+            this.PanelWithElementForAddRequest.Controls.Add(this.label5);
             this.PanelWithElementForAddRequest.Controls.Add(this.NameRequest);
             this.PanelWithElementForAddRequest.Controls.Add(this.label3);
             this.PanelWithElementForAddRequest.Controls.Add(this.label2);
@@ -75,7 +79,7 @@
             this.PanelWithElementForAddRequest.Controls.Add(this.Request);
             this.PanelWithElementForAddRequest.Location = new System.Drawing.Point(515, 1);
             this.PanelWithElementForAddRequest.Name = "PanelWithElementForAddRequest";
-            this.PanelWithElementForAddRequest.Size = new System.Drawing.Size(355, 474);
+            this.PanelWithElementForAddRequest.Size = new System.Drawing.Size(371, 513);
             this.PanelWithElementForAddRequest.TabIndex = 2;
             this.PanelWithElementForAddRequest.Visible = false;
             // 
@@ -91,7 +95,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(3, 55);
+            this.label3.Location = new System.Drawing.Point(3, 44);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(196, 21);
             this.label3.TabIndex = 2;
@@ -110,7 +114,7 @@
             // AddSelectToDB
             // 
             this.AddSelectToDB.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.AddSelectToDB.Location = new System.Drawing.Point(241, 427);
+            this.AddSelectToDB.Location = new System.Drawing.Point(241, 458);
             this.AddSelectToDB.Name = "AddSelectToDB";
             this.AddSelectToDB.Size = new System.Drawing.Size(106, 41);
             this.AddSelectToDB.TabIndex = 1;
@@ -121,7 +125,7 @@
             // Request
             // 
             this.Request.Font = new System.Drawing.Font("Century", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Request.Location = new System.Drawing.Point(3, 79);
+            this.Request.Location = new System.Drawing.Point(3, 68);
             this.Request.Name = "Request";
             this.Request.Size = new System.Drawing.Size(344, 342);
             this.Request.TabIndex = 0;
@@ -214,12 +218,39 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "Отдел";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Century Gothic", 12F);
+            this.label5.Location = new System.Drawing.Point(3, 420);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(62, 21);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Отдел:";
+            // 
+            // DepList
+            // 
+            this.DepList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DepList.FormattingEnabled = true;
+            this.DepList.Items.AddRange(new object[] {
+            "",
+            "IT",
+            "ЗПЗ",
+            "КРО",
+            "МТР",
+            "ОМС",
+            "ФЭО"});
+            this.DepList.Location = new System.Drawing.Point(78, 420);
+            this.DepList.Name = "DepList";
+            this.DepList.Size = new System.Drawing.Size(121, 21);
+            this.DepList.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(873, 526);
+            this.ClientSize = new System.Drawing.Size(890, 526);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.Departments);
             this.Controls.Add(this.PanelWithArg);
@@ -260,6 +291,8 @@
         private System.Windows.Forms.Button RemoveButton;
         private System.Windows.Forms.ComboBox Departments;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox DepList;
+        private System.Windows.Forms.Label label5;
     }
 }
 

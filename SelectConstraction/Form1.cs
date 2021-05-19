@@ -22,7 +22,6 @@ namespace SelectConstraction {
         public Form1() {
             InitializeComponent();
             this.Size = new Size(520, 300);
-            
         }
 
         private void AddRequest_Click(object sender, EventArgs e) {
@@ -62,11 +61,12 @@ namespace SelectConstraction {
         private void AddSelectToDB_Click(object sender, EventArgs e) {
             if (flag) {
                 using (SqlConnection con = new SqlConnection(connectionString)) {
-                    using (SqlCommand com = new SqlCommand("Update Requests set NameRequest = @name, Request = @req Where NameRequest = @name1", con)) {
+                    using (SqlCommand com = new SqlCommand("Update Requests set NameRequest = @name, Request = @req, Departments = @dep Where NameRequest = @name1", con)) {
                         con.Open();
                         com.Parameters.AddWithValue("@name", NameRequest.Text);
                         com.Parameters.AddWithValue("@req", Request.Text);
                         com.Parameters.AddWithValue("@name1", ListWithRequests.SelectedItem.ToString());
+                        com.Parameters.AddWithValue("@dep", DepList.SelectedItem.ToString());
                         com.ExecuteNonQuery();
                     }
                 }
@@ -74,10 +74,11 @@ namespace SelectConstraction {
                 UpdateList();
             } else {
                 using (SqlConnection con = new SqlConnection(connectionString)) {
-                    using (SqlCommand com = new SqlCommand("Insert Into Requests(NameRequest, Request) Values(@name, @req)", con)) {
+                    using (SqlCommand com = new SqlCommand("Insert Into Requests(NameRequest, Request, Departments) Values(@name, @req, @dep)", con)) {
                         con.Open();
                         com.Parameters.AddWithValue("@name", NameRequest.Text);
                         com.Parameters.AddWithValue("@req", Request.Text);
+                        com.Parameters.AddWithValue("@dep", DepList.SelectedItem.ToString());
                         com.ExecuteNonQuery();
                     }
                 }
@@ -86,7 +87,7 @@ namespace SelectConstraction {
             NameRequest.Clear();
             Request.Clear();
             this.AutoSize = false;
-            this.Size = new Size(400, 300);
+            this.Size = new Size(520, 300);
             flag = false;
             AddSelectToDB.Text = "Добавить";
             PanelWithElementForAddRequest.Visible = false;
@@ -246,12 +247,13 @@ namespace SelectConstraction {
 
         void GetReq() {
             using (SqlConnection con = new SqlConnection(connectionString)) {
-                using (SqlCommand com = new SqlCommand("Select Request From Requests Where NameRequest = @name", con)) {
+                using (SqlCommand com = new SqlCommand("Select Request, Departments From Requests Where NameRequest = @name", con)) {
                     con.Open();
                     com.Parameters.AddWithValue("@name", ListWithRequests.SelectedItem.ToString());
                     using (SqlDataReader reader = com.ExecuteReader()) {
                         reader.Read();
                         Request.Text = reader.GetString(0);
+                        DepList.SelectedItem = reader.GetString(1);
                     }
                 }
             }
